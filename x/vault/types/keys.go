@@ -34,6 +34,7 @@ func VaultKey(id uint64) []byte {
 
 func VaultForAddressByPair(address sdk.AccAddress, pairID uint64) []byte {
 	v := append(VaultForAddressByPairKeyPrefix, address.Bytes()...)
+	//comment
 	if len(v) != 1+20 {
 		panic(fmt.Errorf("invalid key length %d; expected %d", len(v), 1+20))
 	}
