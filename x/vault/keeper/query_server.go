@@ -203,7 +203,7 @@ func (q *queryServer) QueryVault(c context.Context, req *types.QueryVaultRequest
 	}, nil
 }
 
-func (q *queryServer) QueryCollateralizationRatio(c context.Context, Id uint64) (sdk.Dec, error) {
+func (q *queryServer) QueryCollateralizationRatio(c context.Context, Id uint64) (types.MsgCalculateResponse, error) {
 	var (
 		ctx = sdk.UnwrapSDKContext(c)
 	)

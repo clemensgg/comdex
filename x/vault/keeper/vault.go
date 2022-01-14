@@ -173,3 +173,13 @@ func (k *Keeper) CalculateCollaterlizationRatio(
 
 	return totalIn.Quo(totalOut), nil
 }
+
+func (k *Keeper) SetCollaterlizationRatio(ctx sdk.Context, id uint64, cr sdk.Dec) {
+	var (
+		store = k.Store(ctx)
+		key   = types.CollateralizationKey(id)
+		value = k.cdc.MustMarshal(&cr)
+	)
+
+	store.Set(key, value)
+}

@@ -87,6 +87,15 @@ message MsgCloseRequest {
 
 message MsgCloseResponse {}
 
+
+message MsgCalculateRequest {
+  string from = 1 [ (gogoproto.moretags) = "yaml:\"from\"" ];
+  uint64 id   = 2
+  [ (gogoproto.customname) = "ID", (gogoproto.moretags) = "yaml:\"id\"" ];
+}
+
+message MsgCalculateResponse {}
+
 service MsgService {
   rpc MsgCreate(MsgCreateRequest) returns (MsgCreateResponse);
   rpc MsgDeposit(MsgDepositRequest) returns (MsgDepositResponse);
@@ -94,4 +103,5 @@ service MsgService {
   rpc MsgDraw(MsgDrawRequest) returns (MsgDrawResponse);
   rpc MsgRepay(MsgRepayRequest) returns (MsgRepayResponse);
   rpc MsgClose(MsgCloseRequest) returns (MsgCloseResponse);
+  rpc MsgCalculate(MsgCalculateRequest) returns (MsgCalculateResponse);
 }

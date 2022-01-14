@@ -252,15 +252,15 @@ func txCalculateCollateralizationRatio() *cobra.Command {
 				return err
 			}
 
-			_, err = strconv.ParseUint(args[0], 10, 64)
+			id, err := strconv.ParseUint(args[0], 10, 64)
 			if err != nil {
 				return err
 			}
 
-			//msg := types.Calculate(ctx.FromAddress, id)
-			//if err := msg.ValidateBasic(); err != nil {
-			//	return err
-			//}
+			msg := types.NewMsgCalculateRequest(ctx.FromAddress, id)
+			if err := msg.ValidateBasic(); err != nil {
+				return err
+			}
 			return tx.GenerateOrBroadcastTxCLI(ctx, cmd.Flags(), nil)
 		},
 	}

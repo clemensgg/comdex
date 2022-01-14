@@ -272,3 +272,48 @@ func (k *msgServer) MsgRepay(c context.Context, msg *types.MsgRepayRequest) (*ty
 func (k *msgServer) MsgClose(c context.Context, msg *types.MsgCloseRequest) (*types.MsgCloseResponse, error) {
 	panic("implement me")
 }
+
+func (k *msgServer) MsgCalculate(c context.Context, msg *types.MsgCalculateRequest) (*types.MsgCalculateResponse, error) {
+	ctx := sdk.UnwrapSDKContext(c)
+
+	vault, found := k.GetVault(ctx, msg.ID)
+	if !found {
+		return nil, types.ErrorVaultDoesNotExist
+	}
+
+	pair, found := k.GetPair(ctx, vault.PairID)
+	if !found {
+		return nil, types.ErrorPairDoesNotExist
+	}
+
+	assetIn, found := k.GetAsset(ctx, pair.AssetIn)
+	if !found {
+		return nil, types.ErrorAssetDoesNotExist
+	}
+
+	assetOut, found := k.GetAsset(ctx, pair.AssetOut)
+	if !found {
+		return nil, types.ErrorAssetDoesNotExist
+	}
+
+	value, err := k.CalculateCollaterlizationRatio(ctx,vault.AmountIn, assetIn, vault.AmountOut, assetOut)
+	var (
+		id  = k.GetID(ctx)
+		vault = types.Vault{
+			ID:        id + 1,
+			PairID:    msg.PairID,
+			Owner:     msg.From,
+			AmountIn:  msg.AmountIn,
+			AmountOut: msg.AmountOut,
+		}
+	)
+
+	k.SetID(ctx, id+1)
+	k.SetVault(ctx, vault)
+	k.SetVaultForAddressByPair(ctx, from, vault.PairID, vault.ID)
+
+	return &types.MsgCreateResponse{}, nil
+
+	return &types.MsgCalculateResponse{}, nil
+}
+

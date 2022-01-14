@@ -20,17 +20,24 @@ var (
 	TypeMsgDrawRequest      = ModuleName + ":draw"
 	TypeMsgRepayRequest     = ModuleName + ":repay"
 	TypeMsgLiquidateRequest = ModuleName + ":liquidate"
+	TypeMsgCalculateRequest = ModuleName + ":calculate"
 )
 
 var (
 	IDKey                        = []byte{0x00}
 	VaultKeyPrefix                 = []byte{0x10}
 	VaultForAddressByPairKeyPrefix = []byte{0x20}
+	CollateralizationKeyPrefix	   = []byte{0x30}
 )
 
 func VaultKey(id uint64) []byte {
 	return append(VaultKeyPrefix, sdk.Uint64ToBigEndian(id)...)
 }
+
+func CollateralizationKey(id uint64) []byte {
+	return append(CollateralizationKeyPrefix, sdk.Uint64ToBigEndian(id)...)
+}
+
 
 func VaultForAddressByPair(address sdk.AccAddress, pairID uint64) []byte {
 	v := append(VaultForAddressByPairKeyPrefix, address.Bytes()...)

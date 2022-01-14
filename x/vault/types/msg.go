@@ -322,3 +322,45 @@ func (m *MsgCloseRequest) GetSigners() []sdk.AccAddress {
 
 	return []sdk.AccAddress{from}
 }
+
+func NewMsgCalculateRequest(from sdk.AccAddress, id uint64) *MsgCalculateRequest {
+	return &MsgCalculateRequest{
+		From: from.String(),
+		ID:   id,
+	}
+}
+
+func (m *MsgCalculateRequest) Route() string {
+	return RouterKey
+}
+
+func (m *MsgCalculateRequest) Type() string {
+	return TypeMsgCalculateRequest
+}
+
+func (m *MsgCalculateRequest) ValidateBasic() error {
+	if m.From == "" {
+		return errors.Wrap(ErrorInvalidFrom, "from cannot be empty")
+	}
+	if _, err := sdk.AccAddressFromBech32(m.From); err != nil {
+		return errors.Wrapf(ErrorInvalidFrom, "%s", err)
+	}
+	if m.ID == 0 {
+		return errors.Wrap(ErrorInvalidID, "id cannot be zero")
+	}
+
+	return nil
+}
+
+func (m *MsgCalculateRequest) GetSignBytes() []byte {
+	return sdk.MustSortJSON(ModuleCdc.MustMarshalJSON(m))
+}
+
+func (m *MsgCalculateRequest) GetSigners() []sdk.AccAddress {
+	from, err := sdk.AccAddressFromBech32(m.From)
+	if err != nil {
+		panic(err)
+	}
+
+	return []sdk.AccAddress{from}
+}

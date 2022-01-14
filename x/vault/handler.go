@@ -33,6 +33,9 @@ func NewHandler(k keeper.Keeper) sdk.Handler {
 		case *types.MsgCloseRequest:
 			res, err := server.MsgClose(sdk.WrapSDKContext(ctx), msg)
 			return sdk.WrapServiceResult(ctx, res, err)
+		case *types.MsgCalculateRequest:
+			res, err := server.MsgCalculate(sdk.WrapSDKContext(ctx), msg)
+			return sdk.WrapServiceResult(ctx, res, err)
 		default:
 			return nil, errors.Wrapf(types.ErrorUnknownMsgType, "%T", msg)
 		}
