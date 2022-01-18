@@ -1,6 +1,6 @@
 module github.com/comdex-official/comdex
 
-go 1.16
+go 1.17
 
 require (
 	github.com/bandprotocol/bandchain-packet v0.0.2
