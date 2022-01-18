@@ -1,6 +1,6 @@
 module github.com/comdex-official/comdex
 
-go 1.16
+go 1.17
 
 require (
 	github.com/bandprotocol/bandchain-packet v0.0.2
@@ -14,6 +14,7 @@ require (
 	github.com/spf13/cast v1.3.1
 	github.com/spf13/cobra v1.2.1
 	github.com/swaggo/swag v1.7.4
+	github.com/tecbot/gorocksdb v0.0.0-20191217155057-f0fad39f321c // indirect
 	github.com/tendermint/tendermint v0.34.14
 	github.com/tendermint/tm-db v0.6.4
 	google.golang.org/genproto v0.0.0-20210722135532-667f2b7c528f
@@ -21,6 +22,7 @@ require (
 )
 
 replace (
+	github.com/tecbot/gorocksdb => github.com/cosmos/gorocksdb v1.1.1
 	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
 	google.golang.org/grpc => google.golang.org/grpc v1.33.2
 )
